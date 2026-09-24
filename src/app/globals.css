@@ -1,26 +1,167 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* `font-serif` is kept as the body alias so existing markup keeps working. */
+  --font-sans: var(--font-source-sans), var(--font-noto-devanagari), sans-serif;
+  --font-serif: var(--font-sans);
+  --font-mono: var(--font-plex-mono), var(--font-noto-devanagari), monospace;
+  --font-heading: var(--font-jakarta), var(--font-noto-devanagari), sans-serif;
+
+  /* TCMCF brand palette — sampled from the design canvas */
+  --color-ink: #40230c;
+  --color-bark: #6f4627;
+  --color-gold: #ae915e;
+  --color-sage: #edf0d5;
+  --color-paper: #f8f8f8;
+  --color-body: #4a3520;
+  --color-cream: #e3d6bf;
+  --color-sand: #d8c7a9;
+  --color-clay: #c9b695;
+  --color-canvas: #eeede9;
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #f8f8f8;
+  --foreground: #40230c;
+  --card: #f8f8f8;
+  --card-foreground: #40230c;
+  --popover: #f8f8f8;
+  --popover-foreground: #40230c;
+  --primary: #40230c;
+  --primary-foreground: #f8f8f8;
+  --secondary: #edf0d5;
+  --secondary-foreground: #40230c;
+  --muted: #edf0d5;
+  --muted-foreground: #6f4627;
+  --accent: #edf0d5;
+  --accent-foreground: #40230c;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgb(64 35 12 / 0.12);
+  --input: rgb(64 35 12 / 0.2);
+  --ring: #ae915e;
+  --chart-1: #40230c;
+  --chart-2: #6f4627;
+  --chart-3: #ae915e;
+  --chart-4: #c9b695;
+  --chart-5: #e3d6bf;
+  --radius: 0rem;
+  --sidebar: #f8f8f8;
+  --sidebar-foreground: #40230c;
+  --sidebar-primary: #40230c;
+  --sidebar-primary-foreground: #f8f8f8;
+  --sidebar-accent: #edf0d5;
+  --sidebar-accent-foreground: #40230c;
+  --sidebar-border: rgb(64 35 12 / 0.12);
+  --sidebar-ring: #ae915e;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-serif;
+  }
+  html {
+    @apply font-serif;
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /*
+   * The canvas sizes every page against the page container with `cqi` units,
+   * so one fluid layout replaces per-breakpoint variants. `page-shell` is the
+   * container those units resolve against.
+   */
+  .page-shell {
+    container-type: inline-size;
+  }
+  .gutter {
+    padding-inline: clamp(20px, 4.4cqi, 64px);
+  }
+  /* Clears the sticky nav (and sub-nav) when jumping to an anchor. */
+  .anchor-offset {
+    scroll-margin-top: clamp(100px, 13cqi, 136px);
+  }
+
+  /* Hatched image placeholders, straight from the design canvas. */
+  .hatch {
+    background: repeating-linear-gradient(
+      45deg,
+      #edf0d5 0 11px,
+      #e4e8cb 11px 22px
+    );
+  }
+  .hatch-sm {
+    background: repeating-linear-gradient(
+      45deg,
+      #edf0d5 0 10px,
+      #e4e8cb 10px 20px
+    );
+  }
+  .hatch-deep {
+    background: repeating-linear-gradient(
+      45deg,
+      #e1e5c6 0 11px,
+      #d6dbb6 11px 22px
+    );
+  }
+  .hatch-logo {
+    background: repeating-linear-gradient(
+      45deg,
+      rgb(174 145 94 / 0.1) 0 8px,
+      transparent 8px 16px
+    );
+  }
+  .hatch-mark {
+    background: repeating-linear-gradient(
+      45deg,
+      rgb(174 145 94 / 0.08) 0 8px,
+      transparent 8px 16px
+    );
+  }
 }
