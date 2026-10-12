@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { IMAGE_SKELETON } from "@/components/site/primitives";
 import { CONTACT } from "@/lib/content";
 import { NAV_LINKS, SUB_NAVS, isNavActive, type NavLink } from "@/lib/nav";
 import Image from "next/image";
@@ -73,9 +74,13 @@ function NavItem({
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({
+  cmsSubNavs = {},
+}: {
+  cmsSubNavs?: Record<string, readonly NavLink[]>;
+}) {
   const pathname = usePathname();
-  const subNav = SUB_NAVS[pathname];
+  const subNav = cmsSubNavs[pathname]?.length ? cmsSubNavs[pathname] : SUB_NAVS[pathname];
   const activeAnchor = useActiveAnchor(subNav);
 
   return (
@@ -83,6 +88,7 @@ export function SiteHeader() {
       <div className="gutter flex items-center justify-between gap-[clamp(12px,2cqi,32px)] py-[clamp(12px,1.25cqi,18px)]">
         <Link href="/" aria-label="TCMCF home">
           <Image
+            placeholder={IMAGE_SKELETON}
             src="/logo.png"
             width={100}
             height={100}

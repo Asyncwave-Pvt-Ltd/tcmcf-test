@@ -1,26 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "cn";
 
-import { Eyebrow, Photo } from "@/components/site/primitives";
-import { STORIES } from "@/lib/content";
+import { Eyebrow, Photo, IMAGE_SKELETON } from "@/components/site/primitives";
+import type { Story } from "@/lib/sanity";
 
 const ROTATE_MS = 7000;
+const photoClass =
+  "order-2 my-4 h-[200px] md:order-4 md:col-start-1 md:my-0 md:mt-7 md:h-[240px] lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:mt-0 lg:h-[420px]";
 
-export function FeaturedStory() {
+export function FeaturedStory({ stories }: { stories: Story[] }) {
   const [i, setI] = useState(0);
 
   useEffect(() => {
     const id = setInterval(
-      () => setI((n) => (n + 1) % STORIES.length),
+      () => setI((n) => (n + 1) % stories.length),
       ROTATE_MS,
     );
     return () => clearInterval(id);
-  }, []);
+  }, [stories.length]);
 
-  const story = STORIES[i];
+  const story = stories[i];
 
   return (
     <section className="border-y border-ink/12 bg-sage px-5 py-9 md:px-9 md:pt-12 md:pb-6 lg:px-16 lg:pt-16 lg:pb-8">
@@ -29,11 +32,20 @@ export function FeaturedStory() {
           Featured Story
         </Eyebrow>
 
-        <Photo
-          label="FARMER PORTRAIT"
-          tone="deep"
-          className="order-2 my-4 h-[200px] md:order-4 md:col-start-1 md:my-0 md:mt-7 md:h-[240px] lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:mt-0 lg:h-[420px]"
-        />
+        {story.image ? (
+          <div className={cn("relative", photoClass)}>
+            <Image
+              placeholder={IMAGE_SKELETON}
+              src={story.image}
+              alt={story.alt ?? ""}
+              fill
+              sizes="(min-width: 1024px) 520px, (min-width: 768px) 300px, 100vw"
+              className="object-cover"
+            />
+          </div>
+        ) : (
+          <Photo label="FARMER PORTRAIT" tone="deep" className={photoClass} />
+        )}
 
         <blockquote className="order-3 m-0 font-serif text-[21px]/[1.35] font-normal text-ink text-pretty md:order-2 md:col-span-2 md:mt-[18px] md:text-[26px]/[1.35] lg:col-span-1 lg:col-start-2 lg:row-start-2 lg:mt-[22px] lg:text-[30px]/[1.35]">
           &ldquo;{story.q}&rdquo;
@@ -50,7 +62,7 @@ export function FeaturedStory() {
 
           <div className="mt-5 md:mt-6 lg:mt-8">
             <Link
-              href="/stories"
+              href={story.slug ? `/stories/${story.slug}` : "/stories"}
               className="border-b border-gold pb-[3px] font-serif text-[15px] font-normal text-ink hover:text-bark"
             >
               Read the full story →
@@ -60,7 +72,7 @@ export function FeaturedStory() {
       </div>
 
       <div className="mt-4 flex justify-center gap-2 md:mt-8 lg:mt-6">
-        {STORIES.map((_, k) => (
+        {stories.map((_, k) => (
           <button
             key={k}
             type="button"

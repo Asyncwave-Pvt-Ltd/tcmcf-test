@@ -1,9 +1,19 @@
 import { cn } from "cn";
 
+import { RollingNumber } from "@/components/site/rolling-number";
+
 /**
  * Shared building blocks. Every size here is a `clamp(min, Ncqi, max)` taken
  * straight from the canvas, so one fluid rule replaces per-breakpoint variants.
  */
+
+/**
+ * Shimmering canvas-toned skeleton for `<Image placeholder={IMAGE_SKELETON}>`.
+ * next/image paints it as the background until the image loads, then drops it.
+ */
+export const IMAGE_SKELETON = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="g"><stop offset="0" stop-color="#eeede9"/><stop offset=".5" stop-color="#f8f8f8"/><stop offset="1" stop-color="#eeede9"/></linearGradient></defs><rect width="100" height="100" fill="#eeede9"/><rect width="100" height="100" fill="url(#g)"><animate attributeName="x" from="-100" to="100" dur="1.4s" repeatCount="indefinite"/></rect></svg>`,
+)}` as const;
 
 /** Mono, uppercase, letter-spaced kicker used above almost every heading. */
 export function Eyebrow({
@@ -165,9 +175,12 @@ export function StatStrip({
   stats,
   minColumn = 200,
   size = "lg",
+  animate = false,
   className,
 }: {
   stats: readonly { v: string; k: string }[];
+  /** Odometer-roll the figures when they scroll into view. */
+  animate?: boolean;
   /** Narrowest a column may get before the grid wraps. */
   minColumn?: number;
   size?: keyof typeof STAT_SIZES;
@@ -187,7 +200,7 @@ export function StatStrip({
           className={cn("border-r border-b border-paper/14", s.pad)}
         >
           <div className={cn("font-serif font-normal text-paper", s.value)}>
-            {stat.v}
+            {animate ? <RollingNumber text={stat.v} /> : stat.v}
           </div>
           <div
             className={cn(

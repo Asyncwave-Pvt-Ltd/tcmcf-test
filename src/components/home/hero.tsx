@@ -1,17 +1,21 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Eyebrow, Photo, Rule } from "@/components/site/primitives";
-import { HINDI_GLOSS, HINDI_LINE } from "@/lib/content";
+import { Eyebrow, IMAGE_SKELETON } from "@/components/site/primitives";
+import { HINDI_LINE } from "@/lib/content";
+import { CldImage } from "@/components/site/cld-image";
 
 export function Hero() {
   return (
-    <section className="border-b border-ink/12 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-      <div className="px-5 pt-9 pb-8 md:px-9 md:pt-14 md:pb-12 lg:pt-20 lg:pr-14 lg:pb-18 lg:pl-16">
+    <section className="border-b border-ink/12 lg:grid lg:grid-cols-2 lg:items-stretch lg:min-h-[calc(100svh-var(--header-h))] min-[1480px]:min-h-0 min-[1480px]:flex-1">
+      <div className="@container px-5 pt-9 pb-8 md:px-9 md:pt-14 md:pb-12 lg:pt-20 lg:pr-14 lg:pb-18 lg:pl-16">
         <Eyebrow>The Change Makers Charitable Foundation</Eyebrow>
 
-        <h1 className="mt-3.5 mb-0 font-heading text-[34px]/[1.1] font-normal tracking-[-0.015em] text-ink text-pretty md:mt-5 md:text-[44px]/[1.08] md:tracking-[-0.02em] lg:mt-[26px] lg:text-[56px]/[1.06]">
-          <div>Sustainable Farms.</div> <div>Stronger Communities.</div>
+        {/* Font scales with column width (9cqi, capped at 56px) so each line always fits on one row. */}
+        <h1 className="mt-3.5 mb-0 font-heading text-[min(56px,9cqi)] leading-[1.1] font-normal tracking-[-0.015em] whitespace-nowrap text-ink md:mt-5 md:leading-[1.08] md:tracking-[-0.02em] lg:mt-[26px] lg:leading-[1.06]">
+          Sustainable Farms.
+          <br />
+          Stronger Communities.
         </h1>
 
         <p className="my-8 py-2 px-4 bg-sage border-b border-b-bark w-max font-serif text-[20px]/[1.5] font-normal text-bark md:block lg:text-[30px]/[1.5]">
@@ -40,18 +44,26 @@ export function Hero() {
         </div>
 
         {/* Below desktop the hero photograph drops into the text column. */}
-        <Photo
-          label="HERO PHOTO"
-          boxed
-          className="mt-7 h-[260px] md:mt-11 md:h-[380px] lg:hidden"
+        <CldImage
+          placeholder={IMAGE_SKELETON}
+          src={"/9.png"}
+          alt="Farmer In Field"
+          width={500}
+          height={700}
+          className="mt-7 h-[260px] md:mt-11 md:h-[380px] lg:hidden w-full object-cover"
         />
       </div>
-
-      <Photo
-        label="HERO PHOTO — FARMER IN FIELD"
-        boxed
-        className="hidden min-h-[640px] border-t-0 border-r-0 border-b-0 border-l border-ink/12 lg:flex"
-      />
+      {/* `fill` keeps the photo from setting the row height; the text column does. */}
+      <div className="relative hidden border-l border-ink/12 lg:block">
+        <CldImage
+          placeholder={IMAGE_SKELETON}
+          src={"/9.png"}
+          alt="Farmer In Field"
+          fill
+          sizes="50vw"
+          className="object-cover"
+        />
+      </div>
     </section>
   );
 }

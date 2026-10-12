@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { CldImage } from "@/components/site/cld-image";
 
 import {
   AutoGrid,
   Chip,
   Eyebrow,
   PageHero,
-  Photo,
   StatStrip,
+  IMAGE_SKELETON,
 } from "@/components/site/primitives";
 import {
   COMMUNITY_STATS,
@@ -35,7 +36,7 @@ export default function CommunityPage() {
         className="pb-[clamp(28px,3.6cqi,56px)]"
       />
 
-      <StatStrip stats={COMMUNITY_STATS} minColumn={180} size="md" />
+      <StatStrip stats={COMMUNITY_STATS} minColumn={180} size="md" animate />
 
       <section
         id="fpc-tribal"
@@ -62,10 +63,13 @@ export default function CommunityPage() {
               ))}
             </div>
           </div>
-          <Photo
-            label="FPO MEETING — ALIRAJPUR"
-            boxed
-            className="min-h-[clamp(200px,20cqi,320px)]"
+          <CldImage
+            placeholder={IMAGE_SKELETON}
+            src="/23.png"
+            alt="FPO meeting in Alirajpur"
+            width={1000}
+            height={640}
+            className="h-full min-h-[clamp(200px,20cqi,320px)] w-full border border-ink/12 object-cover"
           />
         </AutoGrid>
       </section>
@@ -75,11 +79,13 @@ export default function CommunityPage() {
         className="anchor-offset gutter border-y border-ink/12 bg-sage py-[clamp(32px,4.6cqi,68px)]"
       >
         <AutoGrid min={320} gap="clamp(24px,3.4cqi,52px)" className="items-start">
-          <Photo
-            label="WOMEN-LED BIO-INPUT CENTRE"
-            tone="deep"
-            boxed
-            className="min-h-[clamp(200px,20cqi,320px)]"
+          <CldImage
+            placeholder={IMAGE_SKELETON}
+            src="/35.png"
+            alt="Women-led bio-input centre"
+            width={1000}
+            height={640}
+            className="h-full min-h-[clamp(200px,20cqi,320px)] w-full border border-ink/14 object-cover"
           />
           <div>
             <Eyebrow>Women-led FPC</Eyebrow>

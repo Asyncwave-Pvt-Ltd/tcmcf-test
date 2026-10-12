@@ -1,40 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { cn } from "cn";
 
+import { RollingNumber } from "@/components/site/rolling-number";
 import { STATS } from "@/lib/content";
 
-const DURATION = 1700;
-
-/** Eased count-up on mount, matching the canvas: 1.7s cubic ease-out. */
-function useCountUpProgress() {
-  const [p, setP] = useState(0);
-
-  useEffect(() => {
-    // Respect users who ask for less motion — land on the final numbers.
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let raf = 0;
-    const t0 = performance.now();
-    const tick = (t: number) => {
-      if (reduce) {
-        setP(1);
-        return;
-      }
-      const raw = Math.min(1, (t - t0) / DURATION);
-      setP(1 - Math.pow(1 - raw, 3));
-      if (raw < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
-
-  return p;
-}
-
 export function StatBar() {
-  const p = useCountUpProgress();
-
   return (
     <section className="bg-ink py-2 md:grid md:grid-cols-2 md:py-0 lg:grid-cols-4">
       {STATS.map((stat, i) => (
@@ -56,8 +27,9 @@ export function StatBar() {
           )}
         >
           <div className="font-serif text-[34px]/none font-normal text-paper md:text-[38px]/none lg:text-[46px]/none">
-            {Math.round(stat.value * p).toLocaleString("en-IN")}
-            {stat.suffix}
+            <RollingNumber
+              text={stat.value.toLocaleString("en-IN") + stat.suffix}
+            />
           </div>
           <div className="mt-2 font-mono text-[10px]/[1.5] font-normal tracking-[0.1em] text-sand uppercase md:mt-2.5 lg:mt-3 lg:text-[11px]/[1.5]">
             {stat.label}

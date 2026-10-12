@@ -16,10 +16,10 @@ export const NAV_LINKS: readonly (NavLink & { compact: boolean })[] = [
 ];
 
 /**
- * The canvas marks Community, Accreditations and Partners as `active="Our Work"`,
- * so all three light up the same nav item.
+ * The canvas marks Community and Partners as `active="Our Work"`,
+ * so both light up the same nav item.
  */
-const OUR_WORK_ROUTES = ["/community", "/accreditations", "/partners"];
+const OUR_WORK_ROUTES = ["/community", "/partners"];
 
 export function isNavActive(href: string, pathname: string): boolean {
   if (href === "/community") return OUR_WORK_ROUTES.includes(pathname);
@@ -50,11 +50,7 @@ export const SUB_NAVS: Record<string, readonly NavLink[]> = {
     { label: "Women-led FPC", href: "#women-led-fpc" },
     { label: "SHGs", href: "#shgs" },
   ],
-  "/compliance": [
-    { label: "Annual Reports", href: "#annual-reports" },
-    { label: "Audit Reports", href: "#audit-reports" },
-    { label: "FC Annual Reports", href: "#fc-annual-reports" },
-  ],
+  // "/compliance" is built from its CMS sections; see RootLayout.
 };
 
 export const FOOTER_COLUMNS: readonly {
@@ -68,7 +64,6 @@ export const FOOTER_COLUMNS: readonly {
       { label: "Our Work", href: "/community" },
       { label: "Impact", href: "/impact" },
       { label: "Success Stories", href: "/stories" },
-      { label: "Accreditations", href: "/accreditations" },
     ],
   },
   {

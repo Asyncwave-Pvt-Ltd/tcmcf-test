@@ -1,7 +1,7 @@
-import { Eyebrow, Photo } from "@/components/site/primitives";
-import { FOUNDERS, LEADERS, TEAM } from "@/lib/content";
+import { Eyebrow } from "@/components/site/primitives";
+import { getTeam } from "@/lib/sanity";
 
-import { MemberDialog, MemberTrigger } from "./member-dialog";
+import { MemberDialog, MemberTrigger, Portrait } from "./member-dialog";
 
 const nameClass = "m-0 font-serif font-medium text-ink";
 const roleClass = "mt-[5px] font-mono font-normal text-bark";
@@ -9,7 +9,13 @@ const bioClass = "mb-0 font-serif font-normal text-body";
 const cardClass =
   "relative border border-ink/14 bg-paper transition-colors hover:border-ink/40";
 
-export function Team() {
+export async function Team() {
+  const team = await getTeam();
+  const founders = team.filter((m) => m.section === "founder");
+  const leaders = team.filter((m) => m.section === "leader");
+  // The "photographs to be added" note goes once every portrait is in.
+  const photosPending = team.some((m) => !m.image);
+
   return (
     <section
       id="team"
@@ -20,9 +26,11 @@ export function Team() {
           The People Building TCMCF&rsquo;s Model
           <span className="hidden md:inline"> on the Ground</span>
         </h2>
-        <span className="hidden font-mono text-[11px] font-normal text-bark lg:inline">
-          PHOTOGRAPHS TO BE ADDED
-        </span>
+        {photosPending ? (
+          <span className="hidden font-mono text-[11px] font-normal text-bark lg:inline">
+            PHOTOGRAPHS TO BE ADDED
+          </span>
+        ) : null}
       </div>
 
       <p className="mt-3 mb-6 font-serif text-[15px]/[1.7] font-normal text-body md:mt-3.5 md:mb-8 md:text-[16px]/[1.7] lg:mt-5 lg:mb-11 lg:max-w-[780px] lg:text-[18px]/[1.7]">
@@ -40,21 +48,23 @@ export function Team() {
             serve.
           </span>
         </span>
-        <span className="font-mono text-[9.5px] text-bark md:text-[10px] lg:hidden">
-          PHOTO<span className="hidden md:inline">GRAPH</span>S TO BE ADDED
-        </span>
+        {photosPending ? (
+          <span className="font-mono text-[9.5px] text-bark md:text-[10px] lg:hidden">
+            PHOTO<span className="hidden md:inline">GRAPH</span>S TO BE ADDED
+          </span>
+        ) : null}
       </p>
 
       {/* Desktop separates founders from the leadership team (design 1d). */}
       <div className="hidden lg:block">
         <Eyebrow className="mb-5">Founders</Eyebrow>
         <div className="mb-12 grid grid-cols-2 gap-7">
-          {FOUNDERS.map((member) => (
+          {founders.map((member) => (
             <MemberDialog key={member.n} member={member}>
               <div
                 className={`${cardClass} grid grid-cols-[150px_1fr] gap-6 p-6`}
               >
-                <Photo label="PORTRAIT" tone="fine" className="aspect-4/5" />
+                <Portrait member={member} sizes="150px" />
                 <div>
                   <h3 className={`${nameClass} text-[22px]/[1.25]`}>
                     <MemberTrigger>{member.n}</MemberTrigger>
@@ -73,12 +83,12 @@ export function Team() {
 
         <Eyebrow className="mb-5">Leadership Team</Eyebrow>
         <div className="flex flex-wrap justify-center gap-7">
-          {LEADERS.map((member) => (
+          {leaders.map((member) => (
             <MemberDialog key={member.n} member={member}>
               <div
                 className={`${cardClass} grid w-[calc((100%-3.5rem)/3)] grid-cols-[100px_1fr] gap-4 p-5`}
               >
-                <Photo label="PORTRAIT" tone="fine" className="aspect-4/5" />
+                <Portrait member={member} sizes="100px" />
                 <div>
                   <h3 className={`${nameClass} text-[18px]/[1.25]`}>
                     <MemberTrigger>{member.n}</MemberTrigger>
@@ -100,15 +110,15 @@ export function Team() {
 
       {/* Tablet and mobile show one flat roster (design 1e / 1f). */}
       <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-5 lg:hidden">
-        {TEAM.map((member) => (
+        {team.map((member) => (
           <MemberDialog key={member.n} member={member}>
             <div
               className={`${cardClass} grid grid-cols-[96px_1fr] gap-4 p-4 md:block md:p-5`}
             >
-              <Photo
-                label="PORTRAIT"
-                tone="fine"
-                className="aspect-4/5 md:mb-4"
+              <Portrait
+                member={member}
+                sizes="(min-width: 768px) 50vw, 96px"
+                className="md:mb-4"
               />
               <div>
                 <h3

@@ -1,7 +1,8 @@
+import { CldImage } from "@/components/site/cld-image";
 import Link from "next/link";
 import { cn } from "cn";
 
-import { Photo } from "@/components/site/primitives";
+import { IMAGE_SKELETON } from "@/components/site/primitives";
 import { PROGRAMMES } from "@/lib/content";
 
 export function WhatWeDo() {
@@ -20,7 +21,7 @@ export function WhatWeDo() {
       </div>
 
       <div className="grid grid-cols-1 gap-px border border-ink/14 bg-ink/14 lg:grid-cols-3">
-        {PROGRAMMES.map((programme, i) => (
+        {PROGRAMMES.map((programme) => (
           <div
             key={programme.i}
             className={cn(
@@ -41,14 +42,17 @@ export function WhatWeDo() {
                 <span className="hidden md:inline">{programme.body}</span>
               </p>
             </div>
-            {/* Photo sits at the card bottom; mobile only carries one on the first card (design 1c). */}
-            <Photo
-              label="PHOTO"
-              tone="fine"
-              className={cn(
-                "mt-4 h-[110px] md:mt-5 md:flex md:h-[140px] lg:mt-7 lg:h-[150px]",
-              )}
-            />
+            {/* Photo sits at the card bottom. */}
+            <div className="relative mt-4 h-[110px] md:mt-5 md:h-[140px] lg:mt-7 lg:h-[150px]">
+              <CldImage
+                placeholder={IMAGE_SKELETON}
+                src={programme.image}
+                alt={programme.title}
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         ))}
       </div>

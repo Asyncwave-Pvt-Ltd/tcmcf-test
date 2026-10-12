@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { CldImage } from "@/components/site/cld-image";
 
 import { PartnerRoutes } from "@/components/get-involved/partner-routes";
 import { WorkWithUs } from "@/components/get-involved/work-with-us";
-import { AutoGrid, Eyebrow, Photo } from "@/components/site/primitives";
+import { AutoGrid, Eyebrow, IMAGE_SKELETON } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Get Involved",
@@ -39,11 +40,13 @@ export default function GetInvolvedPage() {
               once confirmed.
             </p>
           </div>
-          <Photo
-            label="INTERN WITH FARMERS — PHOTO"
-            tone="deep"
-            boxed
-            className="min-h-[clamp(150px,14cqi,220px)]"
+          <CldImage
+            placeholder={IMAGE_SKELETON}
+            src="/19.png"
+            alt="Intern working with farmers"
+            width={1000}
+            height={640}
+            className="h-full min-h-[clamp(150px,14cqi,220px)] w-full border border-ink/14 object-cover"
           />
         </AutoGrid>
       </section>

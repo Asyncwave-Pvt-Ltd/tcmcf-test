@@ -1,11 +1,40 @@
 "use client";
 
+import Image from "next/image";
 import { Dialog } from "radix-ui";
 import { XIcon } from "lucide-react";
+import { cn } from "cn";
 
-import { Photo } from "@/components/site/primitives";
+import { IMAGE_SKELETON, Photo } from "@/components/site/primitives";
+import type { TeamMember } from "@/lib/sanity";
 
-type Member = { n: string; r: string; d: string };
+/** 4:5 portrait from the CMS, or the hatched slot until one is uploaded. */
+export function Portrait({
+  member,
+  sizes,
+  className,
+}: {
+  member: TeamMember;
+  sizes: string;
+  className?: string;
+}) {
+  if (!member.image) {
+    return <Photo label="PORTRAIT" tone="fine" className={cn("aspect-4/5", className)} />;
+  }
+  return (
+    <div className={cn("relative aspect-4/5", className)}>
+      <Image
+        placeholder={IMAGE_SKELETON}
+        src={member.image}
+        alt={member.alt}
+        fill
+        sizes={sizes}
+        className="object-cover"
+        style={member.focus ? { objectPosition: member.focus } : undefined}
+      />
+    </div>
+  );
+}
 
 /** Stretches over the whole (relative) card so a click anywhere opens the profile. */
 export function MemberTrigger({ children }: { children: React.ReactNode }) {
@@ -20,7 +49,7 @@ export function MemberDialog({
   member,
   children,
 }: {
-  member: Member;
+  member: TeamMember;
   children: React.ReactNode;
 }) {
   return (
@@ -29,10 +58,10 @@ export function MemberDialog({
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/40 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
         <Dialog.Content className="fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[760px] -translate-1/2 gap-5 overflow-y-auto border border-ink/14 bg-paper p-6 shadow-lg duration-200 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 md:grid-cols-[220px_1fr] md:gap-8 md:p-8 lg:grid-cols-[260px_1fr] lg:p-10">
-          <Photo
-            label="PORTRAIT"
-            tone="fine"
-            className="aspect-4/5 w-[140px] md:w-auto"
+          <Portrait
+            member={member}
+            sizes="(min-width: 1024px) 260px, (min-width: 768px) 220px, 140px"
+            className="w-[140px] md:w-auto"
           />
           <div>
             <div className="font-mono text-[10.5px]/[1.5] font-normal tracking-[0.08em] text-bark uppercase md:text-[11px]/[1.5]">

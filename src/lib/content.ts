@@ -21,12 +21,14 @@ export const PROGRAMMES = [
   {
     i: "01",
     title: "Organic & Regenerative Farming",
+    image: "/16.png",
     body: "Helping farmers move from chemical-heavy conventional methods to certified organic, natural, and regenerative practice; yields up, soil restored, input costs cut 12–15% per farmer.",
     short: "Yields up, soil restored, input costs cut 12–15% per farmer.",
   },
   {
     i: "02",
     title: "Women-Led Entrepreneurship",
+    image: "/14.png",
     body: "Backing women-run bio-input production centres and putting women into FPO leadership roles.",
     short:
       "Backing women-run bio-input production centres and putting women into FPO leadership roles.",
@@ -34,6 +36,7 @@ export const PROGRAMMES = [
   {
     i: "03",
     title: "Ethical Supply Chains",
+    image: "/8.png",
     body: "Connecting farmers directly to fair-price buyers and global brands through transparent, traceable procurement.",
     short:
       "Connecting farmers directly to fair-price buyers and global brands through transparent, traceable procurement.",
@@ -59,26 +62,27 @@ export const STORIES = [
 ] as const;
 
 export const BRANDS = [
-  "BESTSELLER",
-  "SUPERDRY",
-  "KIABI",
-  "ITC LIMITED",
-  "WWF INDIA",
-  "LT FOODS",
-  "RSWM",
-  "OCA",
-  "IFFDC",
+  { name: "Bestseller", logo: "/bestseller-logo.png" },
+  { name: "Superdry", logo: "/superdry-logo.png" },
+  { name: "Kiabi", logo: "/kiabi-logo.png" },
+  { name: "ITC Limited", logo: "/itc-logo.png" },
+  { name: "WWF India", logo: "/wwf-logo.png" },
+  { name: "LT Foods", logo: "/ltfoods-logo.jpg" },
+  { name: "RSWM", logo: "/rswm-logo.png" },
+  { name: "OCA", logo: "/oca-logo.png" },
+  { name: "IFFDC", logo: "/iffdc-logo.jpg" },
 ] as const;
 
+// `logo: null` renders a text chip until the artwork lands in /public.
 export const CERTS = [
-  "USDA Organic",
-  "India Organic (APEDA)",
-  "GOTS",
-  "OC100",
-  "OEKO-TEX®",
-  "Regenagri®",
-  "FSSAI",
-  "APEDA",
+  { name: "USDA Organic", logo: "/usda-organic-logo.png" },
+  // { name: "India Organic (APEDA)", logo: null },
+  { name: "GOTS", logo: "/gots-logo.png" },
+  { name: "OC100", logo: "/oc100-logo.png" },
+  // { name: "OEKO-TEX®", logo: null },
+  { name: "Regenagri®", logo: "/regen-logo.png" },
+  { name: "FSSAI", logo: "/fssai-logo.png" },
+  { name: "APEDA", logo: "/apeda-logo.png" },
 ] as const;
 
 export const FACTS = [
@@ -137,50 +141,6 @@ export const VALUES = [
     d: "Organic, regenerative methods that restore soil rather than deplete it.",
   },
 ] as const;
-
-export const FOUNDERS = [
-  {
-    n: "Manas Mohan",
-    r: "Promoter, Founder & Director",
-    d: "25+ years in startup leadership and gin management. Built TCMCF's cotton supply chain and its industry tie-ups with spinners and global brands.",
-    short:
-      "25+ years in startup leadership and gin management. Built TCMCF's cotton supply chain and industry tie-ups.",
-  },
-  {
-    n: "Darshan Parasmal Jain",
-    r: "Promoter, Founder & CEO",
-    d: "20+ years leading business units, cooperatives, and FPOs. Architect of TCMCF's large-scale farm projects, agri supply chains, and processing infrastructure.",
-    short:
-      "20+ years leading business units, cooperatives, and FPOs. Architect of TCMCF's large-scale farm projects.",
-  },
-] as const;
-
-export const LEADERS = [
-  {
-    n: "Sarfaraz Khan",
-    r: "Chartered Accountant",
-    d: "15+ years in finance management and accounting, anchoring the financial rigour and transparency behind TCMCF's institutional partnerships.",
-    short:
-      "15+ years in finance management and accounting, anchoring TCMCF's financial rigour.",
-  },
-  {
-    n: "VedPrakash Sao",
-    r: "Director, Supply Chain – Food Commodities",
-    d: "20+ years in supply chain, food processing, and warehouse management for cooperatives and FPOs.",
-    short:
-      "20+ years in supply chain, food processing, and warehouse management.",
-  },
-  {
-    n: "Deepak Soni",
-    r: "Director, Project Management",
-    d: "18+ years in consulting, corporate strategy, and project management. Leads the design and traceability systems behind TCMCF's sustainable farm projects.",
-    short:
-      "18+ years in consulting, corporate strategy, and project management.",
-  },
-] as const;
-
-/** Flat roster used by the tablet/mobile team grids (design 1e / 1f). */
-export const TEAM = [...FOUNDERS, ...LEADERS] as const;
 
 export const CRISES = [
   {
@@ -261,95 +221,6 @@ export const IMPACT_GROUPS = [
 
 export const TRACEABILITY_LINE =
   "Every bale of cotton, every batch of grain, can be traced back to the farmer's field — backed by Transaction Certificates and a dedicated digital traceability system.";
-
-/* ----------------------------------------------------------------- Stories */
-
-export const STORY_METRICS = [
-  { v: "96%", k: "Reduction in input cost per acre" },
-  { v: "25–30%", k: "Rise in cotton yield" },
-  { v: "₹200–300", k: "Input cost per acre, from ₹7,000–8,000" },
-  { v: "3.64 ha", k: "Farm size, Village Gunj" },
-] as const;
-
-export const STORY_PARAS = [
-  "The soil in village Gunj used to smell like the market: sharp, chemical, nothing like earth. Rajkumar Kishan Gore worked that soil for years before he learned there was another way.",
-  "Rajkumar farms 3.64 hectares of cotton in village Gunj. Like most families in the region, farming isn't just his livelihood, it's the foundation everything else in his household is built on: his children's schooling, his family's food security, his standing in the community.",
-  "For years, he farmed the way everyone around him did, buying chemical fertiliser and pesticide from the market, season after season. The inputs alone cost him ₹7,000 to ₹8,000 an acre. His soil grew tired under the chemical load. His health suffered from years of handling pesticide. And despite the rising costs, his yields kept slipping, not climbing.",
-  "TCMCF arrived in village Gunj with a simple idea: make it yourself. Rajkumar joined the village's newly formed Organic Producer Group and, through TCMCF's training, learned to turn five leaves, cow dung, and soybean into everything his fields needed: five-leaf extract, Amrutpani, and a soybean-based nutrient tonic, all produced on his own land, at a fraction of the cost of what he used to buy.",
-  "The difference showed fast. Input costs that once ran ₹7,000 to ₹8,000 an acre fell to just ₹200 to ₹300, a reduction of roughly 96%. His cotton yield climbed 25 to 30%, the kind of number that changes how a family plans its year, not just its season.",
-  "Rajkumar didn't keep what he'd learned to himself. He started walking his neighbours through the same process, farm by farm, field by field. What began as one man's shift away from chemical inputs is slowly becoming how the whole village farms, easing input costs, restoring soil health, and building income security for an entire community, not just one household.",
-] as const;
-
-export const STORY_SLOTS = [
-  {
-    t: "Story slot 2",
-    d: "PLACEHOLDER — second farmer story. Ideally a women-led bio-input centre, to balance the set.",
-  },
-  {
-    t: "Story slot 3",
-    d: "PLACEHOLDER — an FPO or cooperative story from the Alirajpur & Jhabua cluster.",
-  },
-  {
-    t: "Story slot 4",
-    d: "PLACEHOLDER — a food-commodity farmer (rice, wheat, chia or quinoa) from Karnataka.",
-  },
-] as const;
-
-/* ---------------------------------------------------------- Accreditations */
-
-export const CERT_MARKS = [
-  "USDA ORGANIC",
-  "INDIA ORGANIC",
-  "GOTS",
-  "OC100",
-  "OEKO-TEX®",
-  "REGENAGRI®",
-  "FSSAI",
-  "APEDA",
-] as const;
-
-export const CERT_ROWS = [
-  {
-    c: "USDA Organic",
-    b: "United States Department of Agriculture",
-    d: "Opens access to the US organic market and supports premium pricing for certified produce.",
-  },
-  {
-    c: "India Organic",
-    b: "APEDA, Government of India",
-    d: "India's national organic certification, verifying compliance with domestic organic standards.",
-  },
-  {
-    c: "GOTS",
-    b: "Global Standard gGmbH",
-    d: "The benchmark for organic fibre through the textile supply chain, from farm to finished garment.",
-  },
-  {
-    c: "OC100",
-    b: "Textile Exchange",
-    d: "Verifies and traces the organic content of cotton through every stage of processing.",
-  },
-  {
-    c: "OEKO-TEX®",
-    b: "OEKO-TEX Association",
-    d: "Tests for harmful substances, giving international buyers confidence in product safety.",
-  },
-  {
-    c: "Regenagri®",
-    b: "Control Union / Regenagri",
-    d: "Verifies regenerative agriculture practices — central to TCMCF's emerging carbon credit and carbon market work.",
-  },
-  {
-    c: "FSSAI",
-    b: "Food Safety and Standards Authority of India",
-    d: "India's food safety certification, covering TCMCF's processed food commodities.",
-  },
-  {
-    c: "APEDA Accreditation",
-    b: "Government of India",
-    d: "TCMCF's certification body is APEDA-accredited, meaning our audits carry government-recognised authority.",
-  },
-] as const;
 
 /* ---------------------------------------------------------------- Partners */
 
@@ -471,38 +342,6 @@ export const WOMEN_STATS = [
   { v: "1.2 lakh L", k: "Organic inputs produced a year" },
   { v: "2", k: "Bio-input centres operational" },
   { v: "130+", k: "Smallholder seed growers" },
-] as const;
-
-/* -------------------------------------------------------------- Compliance */
-
-const REPORT_YEARS = [
-  { y: "FY 2024–25", n: "Awaiting upload" },
-  { y: "FY 2023–24", n: "Awaiting upload" },
-  { y: "FY 2022–23", n: "Awaiting upload" },
-] as const;
-
-export const COMPLIANCE_GROUPS = [
-  {
-    id: "annual-reports",
-    i: "6.1",
-    t: "Annual Reports",
-    d: "TCMCF publishes its Annual Report each year, covering programme activities, farmer outcomes, and organisational updates. Reports will be listed here for download once supplied.",
-    rows: REPORT_YEARS,
-  },
-  {
-    id: "audit-reports",
-    i: "6.2",
-    t: "Audit Reports",
-    d: "Statutory audit reports will be listed here for download once supplied.",
-    rows: REPORT_YEARS,
-  },
-  {
-    id: "fc-annual-reports",
-    i: "6.3",
-    t: "FC Annual Reports",
-    d: "FCRA (Foreign Contribution) annual returns will be listed here for download once supplied.",
-    rows: REPORT_YEARS,
-  },
 ] as const;
 
 /* ----------------------------------------------------------------- Contact */

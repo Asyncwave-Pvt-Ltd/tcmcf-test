@@ -119,6 +119,8 @@
    */
   .page-shell {
     container-type: inline-size;
+    /* Sticky header height: h-12 logo + clamp() padding + 1px border. Keep in sync with site-header. */
+    --header-h: calc(49px + 2 * clamp(12px, 1.25cqi, 18px));
   }
   .gutter {
     padding-inline: clamp(20px, 4.4cqi, 64px);
